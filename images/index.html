@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+	<title>Weather App</title>
+</head>
+<body >
+	<div class="container">
+		<div class="content">
+			<div class="top">
+			<h1>Weather</h1>
+			<input id="input" type="text" name="" placeholder="Enter City Name"><br>
+			<button onclick="getdata()" id="btn">SEARCH</button>
+			</div>
+			<div class="main">
+				<h2 id="city" class="city">----</h2>
+				<li id="des">----</li>
+				<li id="icon"></li>
+				<li>Temp: <span id="temp">--</span>°C</li>
+				<li>Min Temp: <span id="min">--</span>°C</li>
+                <li>Max Temp: <span id="max">--</span>°C</li>
+			</div>
+		</div>
+	</div>
+
+
+
+<script type="text/javascript">
+   let api_key="84fa8bfd177daaad991f18f30a60525e";
+   var city=document.getElementById('city');
+   var temp=document.getElementById('temp');
+   var min=document.getElementById('min');
+   var max=document.getElementById('max');
+   var des=document.getElementById('des');
+   var icon=document.getElementById('icon');
+    var body=document.getElementById('body');
+
+
+
+
+	function getdata(){
+		 var input=document.getElementById('input');
+		
+		url=`http://api.openweathermap.org/data/2.5/weather?q=${input.value} &appid=${api_key}&units=metric`;
+		fetch(url).then((response)=>{
+			return response.json();
+		}).then ((data)=>{
+          console.log(data);
+          console.log(data.main.temp);
+          
+          city.innerHTML=data.name;
+          temp.innerHTML=data.main.temp;
+          min.innerHTML=data.main.temp_min;
+          max.innerHTML=data.main.temp_max;
+          des.innerHTML=data.weather[0].description;
+          icon.innerHTML=`<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png"/>`;
+
+          if (data.weather[0].main =="Clear") {
+          	document.body.style.backgroundImage=`url("clear.jpg")`;
+          }
+          else if (data.weather[0].main =="Haze") {
+          	document.body.style.backgroundImage=`url("haze.jpg")`;
+          }
+          else if (data.weather[0].main =="Smoke") {
+          	document.body.style.backgroundImage=`url("smoke.jpg")`;
+          }
+           else if (data.weather[0].main =="Rain") {
+          	document.body.style.backgroundImage=`url("rain.jpg")`;
+          }
+          else if (data.weather[0].main =="sunny") {
+          	document.body.style.backgroundImage=`url("sunny.jpeg")`;
+          }
+           else if (data.weather[0].main =="Clouds") {
+          	document.body.style.backgroundImage=`url("cloud.jpg")`;
+          }
+           
+		})
+		
+	}
+	
+
+
+</script>	
+</body>
+</html>

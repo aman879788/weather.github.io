@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Weather</title>
+</head>
+<body>
+	<div class="container">
+		<div class="main">
+			
+		<div class="section">
+		<div class="header">
+			<div class="left">
+				<h1>WEATHER</h1>
+			</div>
+			<div class="right">
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="content">
+			<h1>DISCOVER THE <span>WEATHER</span> IN YOUR AREA</h1>
+			<p>The best way to find weather in your area</p>
+			<button>Big Cities</button>
+			<form action="data.html">
+			<input id="input" type="text" name="" placeholder="ENTER LOCATION">
+			<a onclick="getdata()" href="#img">Get Updates</a>
+			</form>
+
+	
+			
+		</div>
+		</div>
+        </div>
+         <div class="img" id="img">
+        <div class="section" id="sec1">
+        	
+       
+		<div class="data" id="dta">
+			<h1 id="city">----</h1>
+
+			<li><span id="temp">----</span>°C</li>
+			
+		</div>
+
+   
+     <div class="other">
+     	<h1>Description</h1>
+     	<span id="desc">Fetching..</span>
+
+     </div>
+      <div class="other">
+     	<h1>Humidity</h1>
+     	<span id="humid">Fetching..</span>
+
+     </div>
+      <div class="other">
+     	<h1>Max-temp</h1>
+     	<li><span id="max">Fetching..</span>°C</li>
+
+     </div>
+      <div class="other">
+     	<h1>Wind</h1>
+     	<span id="wind">Fetching..</span>
+
+     </div>
+     <div class="other">
+     	<h1>Visiblity</h1>
+     	<span id="visible">Fetching..</span>
+
+     </div>
+     
+    </div>
+	</div>
+	</div>
+ 
+	
+
+
+<script type="text/javascript">
+			
+	let api_key="d9f5c427adab864e0347da0dfdfddee5";
+	var temp=document.getElementById('temp');
+	var city=document.getElementById('city');
+	var rain=document.getElementById('rain');
+	var humid=document.getElementById('humid');
+	var wind=document.getElementById('wind');
+	var visible=document.getElementById('visible');
+	var desc=document.getElementById('desc');
+	var icon=document.getElementById('icon');
+	var max=document.getElementById('max');
+	var dta=document.getElementById('sec1');
+	
+
+
+	function getdata(){
+		document.getElementById('aSome')
+		// var sec=document.getElementById('sec1');
+		var input=document.getElementById('input');
+		url=`http://api.openweathermap.org/data/2.5/weather?q=${input.value} &appid=${api_key}&units=metric`;
+		fetch(url).then((response)=>{
+          return response.json();
+      }).then((data)=>{
+           console.log(data);
+           console.log(data.main.temp);
+           city.innerHTML=data.name;
+           temp.innerHTML=data.main.temp;
+           wind.innerHTML=data.wind.speed;
+           humid.innerHTML=data.main.humidity;
+           visible.innerHTML=data.visibility;
+           desc.innerHTML=data.weather[0].description;
+           max.innerHTML=data.main.temp_max;
+           
+
+
+           if (data.weather[0].main =="Clear") {
+          	dta.style.backgroundImage=`url("images/clear.jpg")`;
+          }
+          else if (data.weather[0].main =="Haze") {
+          	dta.style.backgroundImage=`url("images/haze.jpg")`;
+          }
+          else if (data.weather[0].main =="Smoke") {
+          	dta.style.backgroundImage=`url("images/smoke.jpg")`;
+          }
+           else if (data.weather[0].main =="Rain") {
+          	dta.style.backgroundImage=`url("images/rain.jpg")`;
+          }
+          else if (data.weather[0].main =="sunny") {
+          	dta.style.backgroundImage=`url("images/sunny.jpeg")`;
+          }
+           else if (data.weather[0].main =="Clouds") {
+          dta.style.backgroundImage=`url("images/cloud.jpg")`;
+          }
+		})
+	} 
+      
+
+</script>
+	
+ 
+</body>
+</html>
